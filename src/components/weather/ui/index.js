@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { getWeather } from '../services/weatherService';
 import { useDebounce } from '../../../utils/useDebounce';
+import WeatherCard from './weatherCard';
 
 const WeatherUpdates = () => {
     const [location, setLocation] = useState('');
@@ -32,29 +33,28 @@ const WeatherUpdates = () => {
             sx={{
                 '& .MuiTextField-root': { m: 1, width: '25ch' },
             }}
-            noValidate
+            
             autoComplete="off"
         >
             <div>
                 <TextField
+                    style = {{width: 280}}
                     required
+                    helperText="Enter Location to know Weather Details"
                     id="outlined-required"
-                    label="Required"
-                    defaultValue="Enter Location"
                     onChange={(e)=>setLocation(e.target.value)}
                 />
             </div>
-            {error && <p>{error}</p>}
-            {weather && (
-                <div>
-                    <p>Location: {weather.location.name}</p>
-                    <p>Country: {weather.location.country}</p>
-                    <p>Time Currently in that Location: {weather.location.localtime}</p>
-                    <p>Temperature: {weather.current.temp_c}°C</p>
-                    <p>Condition: {weather.current.condition.text}</p>
-                    <img src={weather.current.condition.icon} alt="Weather icon" />
-                </div>
-            )}
+            {!weather && error && <p>{error}</p>}
+            {weather &&  <WeatherCard 
+                location={weather.location.name}
+                country={weather.location.country}
+                time={weather.location.localtime}
+                temperature={weather.current.temp_c}
+                condition={weather.current.condition.text}
+                icon={weather.current.condition.icon}
+                weather={weather}
+            />}
         </Box>
     )
 };
