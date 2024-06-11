@@ -5,7 +5,7 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      Weather Updates.......11
+      Welcome to Weather Updates
       <WeatherUpdates />
     </div>
   );
